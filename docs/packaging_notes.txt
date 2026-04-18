@@ -3,35 +3,32 @@ Packaging
 
 https://packaging.python.org/tutorials/packaging-projects/
 
-* Иногда для применения некоторых настроек билда нужно удалить старые папки билдов
+Requires: hatch  (pip install hatch)
 
-1. Create .pypirc
-    C:\Users\v.kaukin\.pypirc
-    https://docs.python.org/3/distutils/packageindex.html#pypirc
+1. Install/update hatch:
+    pip install --upgrade hatch
 
-2. Install/update build libs:
-    C:\python\venv\imap_tools312-64\Scripts\python.exe -m pip install --upgrade pip
-    C:\python\venv\imap_tools312-64\Scripts\pip install --upgrade -r C:\kvk\develop\Python\imap_tools\docs\dev_requirements.txt
+2. Build distribution archives:
+    hatch build
 
-3. Generating distribution archives
-    cd C:\kvk\develop\Python\imap_tools\
-    C:\python\venv\imap_tools312-64\Scripts\python.exe C:\kvk\develop\Python\imap_tools\setup.py sdist bdist_wheel
+3. Check the distribution archives:
+    pip install twine && twine check dist/*
 
-4. Check the distribution archives:
-    C:\python\venv\imap_tools312-64\Scripts\python.exe -m twine check dist/*
+4. Upload to PyPI:
+    hatch publish
 
-5. Uploading the distribution archives:
-    C:\python\venv\imap_tools312-64\Scripts\python.exe -m twine upload dist/*
+5. Run tests across all Python versions:
+    hatch test --all
+    # or target a specific version:
+    hatch test --python 3.12
 
-6. Create release
-    at https://github.com/ikvk/imap_tools
+6. Create release at https://github.com/ikvk/imap_tools
 
-7. Mirror
+7. Mirror:
     cd to repo
-        cd C:\kvk\develop\Python\imap_tools\
-    Cleaning old references to remote branches
+    Cleaning old references to remote branches:
         git fetch --prune
-    Push
+    Push:
         git push --prune git@gitflic.ru:ikvk/imap-tools.git +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
 
     https://dev.to/sourcelevel/how-to-properly-mirror-a-git-repository-19d9
