@@ -1,9 +1,10 @@
 import unittest
 
 from imap_tools import MailBox
-from tests.utils import get_test_mailbox_config, TEST_MAILBOX_NAME_SET
+from tests.utils import get_test_mailbox_config, TEST_MAILBOX_NAME_SET, HAVE_CREDENTIALS
 
 
+@unittest.skipUnless(HAVE_CREDENTIALS, 'credentials.ini not found')
 class ConnectionTest(unittest.TestCase):
     def test_connection(self):
         # simple

@@ -6,6 +6,9 @@ from imap_tools import MailBox
 # all: 'GOOGLE', 'YANDEX', 'ZIMBRA', 'MAIL_RU', 'YAHOO', 'OUTLOOK'
 TEST_MAILBOX_NAME_SET = {'YANDEX', 'ZIMBRA', 'MAIL_RU', 'YAHOO'}
 
+_CREDENTIALS_PATHS = (r'../tests/credentials.ini', r'tests/credentials.ini')
+HAVE_CREDENTIALS = any(os.path.exists(p) for p in _CREDENTIALS_PATHS)
+
 
 def get_test_mailbox_config(mailbox_name: str) -> dict:
     config = configparser.ConfigParser()
@@ -48,6 +51,7 @@ def get_test_mailbox(mailbox_name: str):
     return mailbox
 
 
+@unittest.skipUnless(HAVE_CREDENTIALS, 'credentials.ini not found')
 class MailboxTestCase(unittest.TestCase):
     def setUp(self):
         self.mailbox_set = dict()
