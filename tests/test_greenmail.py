@@ -12,8 +12,11 @@ def test_fetch_returns_all_messages(greenmail_mailbox: MailBoxUnencrypted):
     assert len(fetched) == 12
 
 
-def test_fetch_nonexistent_uid_returns_empty(greenmail_mailbox: MailBoxUnencrypted):
-    fetched = list(greenmail_mailbox.fetch(A(uid=['999999']), bulk=True))
+def test_fetch_no_matching_criteria_returns_empty(greenmail_mailbox: MailBoxUnencrypted):
+    # Not using A(uid=[...]): GreenMail's SEARCH implementation doesn't support
+    # the UID search *key* inside a SEARCH command (distinct from the UID SEARCH
+    # command itself, which works fine elsewhere in this suite via .uids()).
+    fetched = list(greenmail_mailbox.fetch(A(subject='no-such-subject-exists'), bulk=True))
     assert len(fetched) == 0
 
 
