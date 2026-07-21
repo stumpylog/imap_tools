@@ -1,6 +1,6 @@
 import glob
+import imaplib
 import os
-import socket
 import uuid
 from typing import TYPE_CHECKING, Iterator, Tuple
 
@@ -25,10 +25,14 @@ def greenmail_service(docker_ip: str, docker_services: "Services") -> Tuple[str,
 
     def is_responsive() -> bool:
         try:
-            with socket.create_connection((docker_ip, port), timeout=1):
-                return True
+            conn = imaplib.IMAP4(docker_ip, port)
         except OSError:
             return False
+        try:
+            conn.logout()
+        except OSError:
+            pass
+        return True
 
     docker_services.wait_until_responsive(timeout=30.0, pause=0.5, check=is_responsive)
     return docker_ip, port
