@@ -1,5 +1,45 @@
-# https://docs.astral.sh/ruff/rules/
+[build-system]
+requires = ["setuptools>=69.5"]
+build-backend = "setuptools.build_meta"
 
+[project]
+name = "imap-tools"
+description = "Work with email by IMAP"
+readme = {file = "README.rst", content-type = "text/x-rst"}
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    {name = "Vladimir Kaukin", email = "KaukinVK@ya.ru"},
+]
+keywords = ["imap", "imap-client", "python3", "python", "email"]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/ikvk/imap_tools"
+
+[tool.setuptools.dynamic]
+version = {attr = "imap_tools.__version__"}
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+imap_tools = ["py.typed"]
+
+[tool.ruff]
 line-length = 120
 indent-width = 4
 target-version = "py38"
@@ -16,11 +56,11 @@ exclude = [
     "imap_tools.egg-info",
 ]
 
-[format]
+[tool.ruff.format]
 indent-style = "space"
 skip-magic-trailing-comma = false
 
-[lint]
+[tool.ruff.lint]
 preview = true
 select = [
     'N', # pep8-naming 84
