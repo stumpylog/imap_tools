@@ -2,12 +2,14 @@ import glob
 import os
 import socket
 import uuid
-from typing import Iterator, Tuple
+from typing import TYPE_CHECKING, Iterator, Tuple
 
 import pytest
-from pytest_docker.plugin import Services
 
 from imap_tools import MailBoxUnencrypted
+
+if TYPE_CHECKING:
+    from pytest_docker.plugin import Services
 
 MESSAGES_DIR = os.path.join(os.path.dirname(__file__), "messages")
 
@@ -18,7 +20,7 @@ def docker_compose_file(pytestconfig: pytest.Config) -> str:
 
 
 @pytest.fixture(scope="session")
-def greenmail_service(docker_ip: str, docker_services: Services) -> Tuple[str, int]:
+def greenmail_service(docker_ip: str, docker_services: "Services") -> Tuple[str, int]:
     port = docker_services.port_for("greenmail", 3143)
 
     def is_responsive() -> bool:
