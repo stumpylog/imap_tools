@@ -20,6 +20,7 @@ def get_test_mailbox_config(mailbox_name: str) -> dict:
             path_separator=config[mailbox_name]['path_separator'],
             test_folder=config[mailbox_name]['test_folder'],
         )
+    raise unittest.SkipTest("credentials.ini not found - skipping live-provider test")
 
 
 def get_test_mailbox(mailbox_name: str):
