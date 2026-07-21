@@ -26,11 +26,11 @@ def greenmail_service(docker_ip: str, docker_services: "Services") -> Tuple[str,
     def is_responsive() -> bool:
         try:
             conn = imaplib.IMAP4(docker_ip, port)
-        except OSError:
+        except (OSError, imaplib.IMAP4.error):
             return False
         try:
             conn.logout()
-        except OSError:
+        except (OSError, imaplib.IMAP4.error):
             pass
         return True
 
