@@ -1,0 +1,5 @@
+services:
+  greenmail:
+    image: greenmail/standalone:2.1.11
+    ports:
+      - "3143"
